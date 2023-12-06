@@ -19,11 +19,13 @@ return new class extends Migration
             $table->dateTime('fecha_publicacion');
             $table->unsignedBigInteger('id_autor');
 
-            $table->foreign('id_autor')->references('id')->on('autores');
 
             $table->timestamps();
         });
     }
+
+/*    $table->foreign('id_autor')->references('id')->on('autores'); */
+
 
     /**
      * Reverse the migrations.

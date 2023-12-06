@@ -11,6 +11,10 @@ class Autor extends Model
 
     protected $table = 'autores';
 
+    protected $fillable = [
+        'nombre',
+    ];
+
     public function entradas() {
         return $this->hasMany(EntradaBlog::class, 'id_autor', 'id');
     }
