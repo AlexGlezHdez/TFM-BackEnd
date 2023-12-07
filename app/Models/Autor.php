@@ -15,7 +15,7 @@ class Autor extends Model
         'nombre',
     ];
 
-    public function entradas() {
+    public function entrada() {
         return $this->hasMany(EntradaBlog::class, 'id_autor', 'id');
     }
 }

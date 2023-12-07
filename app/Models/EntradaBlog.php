@@ -11,8 +11,8 @@ class EntradaBlog extends Model
 
     protected $table = 'entradas_blog';
 
-    public function autores() {
-        return $this->belongsTo(Autores::class);
+    public function autor() {
+        return $this->belongsTo(Autor::class, 'id_autor', 'id');
     }
 
 }

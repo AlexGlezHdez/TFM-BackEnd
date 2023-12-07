@@ -15,6 +15,10 @@ class AutorResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
-        return ['id' => $this->id];
+        return [
+            'id' => $this->id,
+            'nombreAutor' => $this->nombre_autor,
+            'entradas' => EntradaBlogResource::collection($this->whenLoaded('entrada'))
+        ];
     }
 }

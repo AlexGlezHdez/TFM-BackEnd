@@ -15,6 +15,13 @@ class EntradaBlogResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
-        return ['contenido' => $this->contenido];
+        return [
+            'id' => $this->id,
+            'titulo' => $this->titulo_entrada,
+            'contenido' => $this->contenido,
+            'imagen' => $this->imagen,
+            'fechaPublicacion' => $this->fecha_publicacion,
+            'autor' => new AutorResource($this->whenLoaded('autor'))
+        ];
     }
 }
