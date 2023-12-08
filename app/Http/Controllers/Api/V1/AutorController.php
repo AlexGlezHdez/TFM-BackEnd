@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Resources\V1\AutorResource;
 use App\Http\Resources\V1\AutorCollection;
 use App\Filters\V1\AutorFilter;
+use App\Http\Requests\V1\StoreAutorRequest;
+use App\Http\Requests\V1\UpdateAutorRequest;
 
 class AutorController extends Controller
 {
@@ -29,9 +31,9 @@ class AutorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAutorRequest $request)
     {
-        //
+        return new AutorResource(Autor::create($request->all()));
     }
 
     /**
@@ -46,9 +48,9 @@ class AutorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Autor $autor)
+    public function update(UpdateAutorRequest $request, Autor $autor)
     {
-        //
+        $autor->update($request->all());
     }
 
     /**
