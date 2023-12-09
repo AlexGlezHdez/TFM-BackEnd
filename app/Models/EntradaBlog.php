@@ -11,6 +11,14 @@ class EntradaBlog extends Model
 
     protected $table = 'entradas_blog';
 
+    protected $fillable = [
+        'titulo_entrada',
+        'imagen',
+        'contenido',
+        'fecha_publicacion',
+        'id_autor',
+    ];
+
     public function autor() {
         return $this->belongsTo(Autor::class, 'id_autor', 'id');
     }

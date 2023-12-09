@@ -23,7 +23,7 @@ class AutorController extends Controller
 
         $includeEntradasBlog = $request->query('includeEntradas');
 
-        $autores = Autor::where($queryItems)->with('entrada');
+        $autores = Autor::where($queryItems)->with('entradas');
 
         return new AutorCollection($autores->paginate()->appends($request->query()));
     }
@@ -41,7 +41,7 @@ class AutorController extends Controller
      */
     public function show(Autor $autor)
     {
-        return new AutorResource($autor->loadMissing('entrada'));
+        return new AutorResource($autor->loadMissing('entradas'));
         //return Autor::where('id','=',1)->first();
     }
 

@@ -28,4 +28,13 @@ class EntradaBlogController extends Controller
     {
         return new EntradaBlogResource($entradaBlog->loadMissing('autor'));
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, EntradaBlog $entradaBlog)
+    {
+        $entradaBlog->update($request->all());
+    }
+
 }
