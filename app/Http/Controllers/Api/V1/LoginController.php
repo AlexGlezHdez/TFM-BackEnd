@@ -20,11 +20,11 @@ class LoginController extends Controller
 
     $admin = $request->user()->admin;
 
-    $abilities = $admin ? array(['prueba']) : [];
+    $abilities = $admin ? ['admin'] : ['nono'];
 
     return response()->json([
       'token' => $request->user()
-        ->createToken($request->device)
+        ->createToken($request->device, $abilities)
         ->plainTextToken,
       'message' => 'Success',
       'id' => $admin

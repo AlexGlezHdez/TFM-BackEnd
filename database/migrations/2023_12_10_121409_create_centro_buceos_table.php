@@ -11,26 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('entradas_blog', function (Blueprint $table) {
+        Schema::create('centros_buceo', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo_entrada');
-            $table->string('imagen');
-            $table->text('contenido');
-            $table->dateTime('fecha_publicacion');
-            $table->unsignedBigInteger('id_autor');
+            $table->string('nombre');
+            $table->string('direccion');
+            $table->boolean('accesible');
+            $table->float('latitud',8,6);
+            $table->float('longitud',8,6);
 
             $table->timestamps();
         });
     }
-
-/*    $table->foreign('id_autor')->references('id')->on('autores'); */
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('entradas_blog');
+        Schema::dropIfExists('centro_buceos');
     }
 };

@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\UserController as UserV1;
 
 use App\Http\Controllers\Api\V1\EntradaBlogController;
-use App\Http\Controllers\Api\V1\AutorController as AutorV1;
+use App\Http\Controllers\Api\V1\AutorController;
+use App\Http\Controllers\Api\V1\CentroBuceoController;
 
 
 /*
@@ -43,9 +44,7 @@ Route::post('logout', [
 
 // Rutas de acceso a la api
 //Route::apiResource('v1/noticias', EntradaBlogController::class)->parameters(['noticias' => 'entradaBlog']);
-//Route::apiResource('v1/autores', AutorV1::class)->parameters(['autores' => 'autor']);
-
-
+//Route::apiResource('v1/autores', AutorController::class)->parameters(['autores' => 'autor']);
 
 Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], function() {
     Route::apiResource('noticias', EntradaBlogController::class)
@@ -63,5 +62,16 @@ Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], fu
         ->except('index', 'show')
         ->middleware('auth:sanctum')
         ->parameters(['autores' => 'autor']);
-    });
+
+    Route::apiResource('centros', CentroBuceoController::class)
+        ->only('index', 'show')
+        ->parameters(['centros' => 'centroBuceo']);
+    Route::apiResource('centros', CentroBuceoController::class)
+        ->except('index', 'show')
+        ->middleware('auth:sanctum')
+        ->parameters(['centros' => 'centroBuceo']);
+
+
+
+});
 
