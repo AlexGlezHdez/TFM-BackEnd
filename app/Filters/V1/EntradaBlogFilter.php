@@ -17,5 +17,4 @@ class EntradaBlogFilter extends Apifilter {
     'fechaPublicacion' => 'fecha_publicacion',
     'idAutor' => 'id_autor'
   ];
-
 }

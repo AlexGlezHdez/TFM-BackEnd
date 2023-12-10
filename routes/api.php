@@ -42,11 +42,26 @@ Route::post('logout', [
 
 
 // Rutas de acceso a la api
-/*
-Route::apiResource('v1/noticias', EntradaBlogController::class)->parameters(['noticias' => 'entradaBlog']);
-Route::apiResource('v1/autores', AutorV1::class)->parameters(['autores' => 'autor']);
-*/
+//Route::apiResource('v1/noticias', EntradaBlogController::class)->parameters(['noticias' => 'entradaBlog']);
+//Route::apiResource('v1/autores', AutorV1::class)->parameters(['autores' => 'autor']);
+
+
+
 Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], function() {
-    Route::apiResource('noticias', EntradaBlogController::class)->parameters(['noticias' => 'entradaBlog']);
-    Route::apiResource('autores', AutorController::class)->middleware('auth:sanctum')->parameters(['autores' => 'autor']);
-});
+    Route::apiResource('noticias', EntradaBlogController::class)
+        ->only('index', 'show')
+        ->parameters(['noticias' => 'entradaBlog']);
+    Route::apiResource('noticias', EntradaBlogController::class)
+        ->except('index', 'show')
+        ->middleware('auth:sanctum')
+        ->parameters(['noticias' => 'entradaBlog']);
+
+    Route::apiResource('autores', AutorController::class)
+        ->only('index', 'show')
+        ->parameters(['autores' => 'autor']);
+    Route::apiResource('autores', AutorController::class)
+        ->except('index', 'show')
+        ->middleware('auth:sanctum')
+        ->parameters(['autores' => 'autor']);
+    });
+

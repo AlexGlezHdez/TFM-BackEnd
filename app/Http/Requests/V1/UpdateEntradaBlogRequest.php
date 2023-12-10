@@ -26,19 +26,19 @@ class UpdateEntradaBlogRequest extends FormRequest
 
         if ($method == 'PUT') {
             return [
-                'tituloEntrada' => ['required'],
+                'titulo_entrada' => ['required'],
                 'imagen' => ['required'],
                 'contenido' => ['required'],
                 'fecha_publicacion' => ['required'],
-                'id_autor' => ['required'],
+                'idAutor' => ['required'],
             ];
         } else {
             return [
-                'tituloEntrada' => ['sometimes', 'required'],
+                'titulo_entrada' => ['sometimes', 'required'],
                 'imagen' => ['sometimes', 'required'],
                 'contenido' => ['sometimes', 'required'],
                 'fecha_publicacion' => ['sometimes', 'required'],
-                'id_autor' => ['sometimes', 'required'],
+                'idAutor' => ['sometimes', 'required'],
             ];
         }
     }

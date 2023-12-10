@@ -4,13 +4,15 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAutorRequest extends FormRequest
+class StoreEntradaBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
+        return true;
+
         $user = $this->user();
         return $user != null && $user->tokenCan('admin');
     }
@@ -23,13 +25,19 @@ class StoreAutorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombreAutor' => ['required']
+            'tituloEntrada' => ['required'],
+            'imagen' => ['required'],
+            'contenido' => ['required'],
+            'fecha_publicacion' => ['required'],
+            'id_autor' => ['required'],
         ];
     }
 
     protected function prepareForValidation() {
         $this->merge([
-            'nombre_autor' => $this->nombreAutor
+            'titulo_entrada' => $this->tituloEntrada,
+            'fecha_publicacion' => $this->fechaPublicacion,
+            'id_autor' => $this->idAutor
         ]);
     }
 }
