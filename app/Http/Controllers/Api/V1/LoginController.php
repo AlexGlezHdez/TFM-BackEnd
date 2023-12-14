@@ -20,14 +20,14 @@ class LoginController extends Controller
 
     $admin = $request->user()->admin;
 
-    $abilities = $admin ? ['admin'] : ['nono'];
+    $abilities = $admin ? ['admin'] : ['none'];
 
     return response()->json([
       'token' => $request->user()
         ->createToken($request->device, $abilities)
         ->plainTextToken,
       'message' => 'Success',
-      'id' => $admin
+      'id' => $request->user()->id
     ]);
   }
 

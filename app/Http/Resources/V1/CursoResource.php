@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CentroBuceoResource extends JsonResource
+class CursoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,11 @@ class CentroBuceoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        //return parent::toArray($request);
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'direccion' => $this->direccion,
-            'accesible' => $this->accesible,
-            'latitud' => $this->latitud,
-            'longitud' => $this->longitud
-        ];
-    }
+            'titulo' => $this->titulo,
+            'descripcion' => $this->descripcion,
+            'imagen' => $this->imagen,
+            'duracion' => $this->duracion,
+        ];    }
 }

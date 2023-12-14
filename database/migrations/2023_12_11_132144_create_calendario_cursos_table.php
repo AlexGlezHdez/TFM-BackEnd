@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('entradas_blog', function (Blueprint $table) {
+        Schema::create('calendario_cursos', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo_entrada');
-            $table->string('imagen');
-            $table->text('contenido');
-            $table->dateTime('fecha_publicacion');
-            $table->unsignedBigInteger('id_autor');
+            $table->unsignedBigInteger('id_curso');
+            $table->dateTime('fecha');
+            $table->text('detalles');
 
             $table->timestamps();
+
+            $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('entradas_blog');
+        Schema::dropIfExists('calendario_cursos');
     }
 };

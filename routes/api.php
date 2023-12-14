@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\V1\UserController as UserV1;
+use App\Http\Controllers\Api\V1\UserController;
 
 use App\Http\Controllers\Api\V1\EntradaBlogController;
 use App\Http\Controllers\Api\V1\AutorController;
 use App\Http\Controllers\Api\V1\CentroBuceoController;
+use App\Http\Controllers\Api\V1\CursoController;
+use App\Http\Controllers\Api\V1\CalendarioCursosController;
 
 
 /*
@@ -27,9 +29,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::apiResource('v1/users', UserV1::class)
-    ->only(['index', 'show'])
+Route::apiResource('v1/users', UserController::class)
     ->middleware('auth:sanctum');
+//    ->only(['index', 'show'])
+
+Route::post('v1/password', [UserController::class, 'changePassword'])->middleware('auth:sanctum');
 
 // Rutas de autenticacion
 Route::post('login', [
@@ -40,6 +44,8 @@ Route::post('logout', [
     App\Http\Controllers\Api\V1\LoginController::class,
     'logout'
 ])->middleware('auth:sanctum');
+
+
 
 
 // Rutas de acceso a la api
@@ -71,7 +77,19 @@ Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], fu
         ->middleware('auth:sanctum')
         ->parameters(['centros' => 'centroBuceo']);
 
+    Route::apiResource('cursos', CursoController::class)
+        ->middleware('auth:sanctum')
+        ->parameters(['cursos' => 'curso']);
 
+    Route::apiResource('calendario-cursos', CalendarioCursosController::class)
+        ->only('index', 'show')
+        ->parameters(['calendario-cursos' => 'calendarioCursos']);
+    Route::apiResource('calendario-cursos', CalendarioCursosController::class)
+        ->except('index', 'show')
+        ->middleware('auth:sanctum')
+        ->parameters(['calendario-cursos' => 'calendarioCursos']);
 
+    Route::apiResource('usuarios', UserController::class)
+        ->middleware('auth:sanctum');
 });
 

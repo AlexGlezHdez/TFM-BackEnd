@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Generamos el usuario comodín que usaremos para las pruebas como administrador
         \App\Models\User::factory(1)
             ->create([
                 'email' => 'admin@molamola.com',
@@ -25,5 +26,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(AutorSeeder::class);  // Genera por cada autor las noticias que correspondan
         $this->call(CentroBuceoSeeder::class);
+        $this->call(CursoSeeder::class);
     }
 }

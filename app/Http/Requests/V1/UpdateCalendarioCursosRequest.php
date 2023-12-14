@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCentroBuceoRequest extends FormRequest
+class UpdateCalendarioCursosRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,20 +26,22 @@ class UpdateCentroBuceoRequest extends FormRequest
 
         if ($method == 'PUT') {
             return [
-                'nombre' => ['required'],
-                'direccion' => ['required'],
-                'accesible' => ['required', 'boolean'],
-                'latitud' => ['required','numeric'],
-                'longitud' => ['required','numeric'],
+                'fecha' => ['required'],
+                'detalles' => ['required'],
+                'idCurso' => ['required'],
             ];
         } else {
             return [
-                'nombre' => ['sometimes', 'required'],
-                'direccion' => ['sometimes', 'required'],
-                'accesible' => ['sometimes', 'required', 'boolean'],
-                'latitud' => ['sometimes', 'required','numeric'],
-                'longitud' => ['sometimes', 'required','numeric'],
+                'fecha' => ['sometimes', 'required'],
+                'contenido' => ['sometimes', 'required'],
+                'idCurso' => ['sometimes', 'required'],
             ];
         }
+    }
+
+    protected function prepareForValidation() {
+        $this->merge([
+            'id_autor' => $this->idAutor
+        ]);
     }
 }

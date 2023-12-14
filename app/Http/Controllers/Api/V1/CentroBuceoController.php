@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
 use App\Models\CentroBuceo;
 use Illuminate\Http\Request;
@@ -8,20 +8,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CentroBuceoResource;
 use App\Http\Resources\V1\CentroBuceoCollection;
 use App\Filters\V1\CentroBuceoFilter;
-use App\Http\Requests\StoreCentroBuceoRequest;
-use App\Http\Requests\UpdateCentroBuceoRequest;
+use App\Http\Requests\V1\StoreCentroBuceoRequest;
+use App\Http\Requests\V1\UpdateCentroBuceoRequest;
 
 class CentroBuceoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $filter = new CentroBuceoFilter();
         $filterItems = $filter->transform($request); //[['columna', 'operador', 'valor']]
 
-        $centrosBuceo = CentroBuceo::where($filterItems)->orderBy('nombre', 'desc');
+        $centrosBuceo = CentroBuceo::where($filterItems)->orderBy('nombre', 'asc');
 
         return new CentroBuceoCollection($centrosBuceo->paginate()->appends($request->query()));
     }
@@ -31,7 +31,7 @@ class CentroBuceoController extends Controller
      */
     public function store(StoreCentroBuceoRequest $request)
     {
-        return new CentroBuceoResource(EntradaBlog::create($request->all()));
+        return new CentroBuceoResource(CentroBuceo::create($request->all()));
     }
 
     /**
@@ -39,7 +39,7 @@ class CentroBuceoController extends Controller
      */
     public function show(CentroBuceo $centroBuceo)
     {
-        return new CentroBuceo($centroBuceo);
+        return new CentroBuceoResource($centroBuceo);
     }
 
     /**
@@ -47,7 +47,7 @@ class CentroBuceoController extends Controller
      */
     public function update(UpdateCentroBuceoRequest $request, CentroBuceo $centroBuceo)
     {
-        $centroBuceo->update($request-all());
+        $centroBuceo->update($request->all());
     }
 
     /**
