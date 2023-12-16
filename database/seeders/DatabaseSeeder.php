@@ -27,5 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AutorSeeder::class);  // Genera por cada autor las noticias que correspondan
         $this->call(CentroBuceoSeeder::class);
         $this->call(CursoSeeder::class);
+        $this->call(ActividadSeeder::class);
     }
 }

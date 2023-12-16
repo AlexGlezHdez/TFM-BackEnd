@@ -89,7 +89,21 @@ Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], fu
         ->middleware('auth:sanctum')
         ->parameters(['calendario-cursos' => 'calendarioCursos']);
 
-    Route::apiResource('usuarios', UserController::class)
-        ->middleware('auth:sanctum');
+    Route::apiResource('actividades', ActividadController::class)
+        ->middleware('auth:sanctum')
+        ->parameters(['actividades' => 'actividad']);
+
+    Route::apiResource('calendario-actividades', CalendarioActividadesController::class)
+        ->only('index', 'show')
+        ->parameters(['calendario-actividades' => 'calendarioActividades']);
+    Route::apiResource('calendario-actividades', CalendarioActividadesController::class)
+        ->except('index', 'show')
+        ->middleware('auth:sanctum')
+        ->parameters(['calendario-actividades' => 'calendarioActividades']);
+
+
+
+//    Route::apiResource('usuarios', UserController::class)
+//        ->middleware('auth:sanctum');
 });
 

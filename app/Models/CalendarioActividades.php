@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CalendarioCursos extends Model
+class CalendarioActividades extends Model
 {
     use HasFactory;
 
-    protected $table = 'calendario_cursos';
+    protected $table = 'calendario_actividades';
 
     protected $fillable = [
-        'id_curso',
+        'id_actividad',
         'fecha',
         'detalles',
         'plazas'
     ];
 
-    public function curso() {
-        return $this->belongsTo(Curso::class, 'id_curso', 'id');
+    public function actividad() {
+        return $this->belongsTo(Actividad::class, 'id_actividad', 'id');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CursoResource extends JsonResource
+class CalendarioActividadesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class CursoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'titulo' => $this->titulo,
-            'descripcion' => $this->descripcion,
-            'imagen' => $this->imagen,
-            'duracion' => $this->duracion,
+            'fecha' => $this->fecha,
+            'detalles' => $this->detalles,
+            'plazas' => $this->plazas,
+            'actividad' => new ActividadResource($this->whenLoaded('actividad'))
         ];
     }
 }

@@ -33,7 +33,7 @@ class UpdateCalendarioCursosRequest extends FormRequest
         } else {
             return [
                 'fecha' => ['sometimes', 'required'],
-                'contenido' => ['sometimes', 'required'],
+                'detalles' => ['sometimes', 'required'],
                 'idCurso' => ['sometimes', 'required'],
             ];
         }
@@ -41,7 +41,7 @@ class UpdateCalendarioCursosRequest extends FormRequest
 
     protected function prepareForValidation() {
         $this->merge([
-            'id_autor' => $this->idAutor
+            'id_curso' => $this->idCurso
         ]);
     }
 }

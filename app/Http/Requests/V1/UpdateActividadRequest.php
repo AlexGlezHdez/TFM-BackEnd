@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCursoRequest extends FormRequest
+class UpdateActividadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,14 +29,12 @@ class UpdateCursoRequest extends FormRequest
                 'titulo' => ['required'],
                 'descripcion' => ['required'],
                 'imagen' => ['required'],
-                'duracion' => ['required','numeric','integer'],
                 ];
         } else {
             return [
                 'titulo' => ['sometimes', 'required'],
                 'descripcion' => ['sometimes', 'required'],
                 'imagen' => ['sometimes', 'required'],
-                'duracion' => ['sometimes', 'required','numeric','integer'],
                 ];
         }
     }
