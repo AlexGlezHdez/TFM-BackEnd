@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\V1\AutorController;
 use App\Http\Controllers\Api\V1\CentroBuceoController;
 use App\Http\Controllers\Api\V1\CursoController;
 use App\Http\Controllers\Api\V1\CalendarioCursosController;
+use App\Http\Controllers\Api\V1\ImagenController;
+use App\Http\Controllers\Api\V1\ContactoController;
 
 
 /*
@@ -46,11 +48,9 @@ Route::post('logout', [
 ])->middleware('auth:sanctum');
 
 
+Route::post('v1/imagenes', [ImagenController::class, 'uploadImage'])->middleware('auth:sanctum');
 
-
-// Rutas de acceso a la api
-//Route::apiResource('v1/noticias', EntradaBlogController::class)->parameters(['noticias' => 'entradaBlog']);
-//Route::apiResource('v1/autores', AutorController::class)->parameters(['autores' => 'autor']);
+Route::post('v1/contacto', [ContactoController::class, 'enviarMensaje']);
 
 Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], function() {
     Route::apiResource('noticias', EntradaBlogController::class)
@@ -101,9 +101,8 @@ Route::group(['prefix'=>'v1', 'namespace' => '\App\Http\Controllers\Api\V1'], fu
         ->middleware('auth:sanctum')
         ->parameters(['calendario-actividades' => 'calendarioActividades']);
 
+//    Route::apiResource('imagenes', ImagenController::class)
+//        ->only('store');
 
-
-//    Route::apiResource('usuarios', UserController::class)
-//        ->middleware('auth:sanctum');
 });
 

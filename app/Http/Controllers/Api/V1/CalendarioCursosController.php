@@ -23,6 +23,8 @@ class CalendarioCursosController extends Controller
 
         $includeCursos = $request->query('includeCursos');
 
+
+        //$calendarioCursos = CalendarioCursos::where($filterItems)->with('curso')->orderBy('fecha', 'desc');
         $calendarioCursos = CalendarioCursos::where($filterItems)->with('curso')->orderBy('fecha', 'desc');
 
         return new CalendarioCursosCollection($calendarioCursos->paginate()->appends($request->query()));

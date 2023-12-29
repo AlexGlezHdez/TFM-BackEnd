@@ -3,6 +3,7 @@
 namespace App\Filters;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiFilter {
 
@@ -35,7 +36,7 @@ class ApiFilter {
       foreach ($operators as $operator) {
         if (isset($query[$operator])) {
           if ($operator=='lk') {
-            $eloQuery[] = [$column, $this->operatorMap[$operator], '%'.$query[$operator].'%'];
+            $eloQuery[] = [$column, $this->operatorMap[$operator], DB::raw('"%'.$query[$operator].'%"')];
           } else {
             $eloQuery[] = [$column, $this->operatorMap[$operator], $query[$operator]];
           }

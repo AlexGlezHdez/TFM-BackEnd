@@ -25,7 +25,7 @@ class AutorController extends Controller
 
         $autores = Autor::where($queryItems)->with('entradas');
 
-        return new AutorCollection($autores->paginate()->appends($request->query()));
+        return new AutorCollection($autores->get());
     }
 
     /**

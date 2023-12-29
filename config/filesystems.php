@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'molamola' => [
+            'driver' => 'local',
+            'root' => '/',
+            'url' => 'https://tfm-clubmolamola.es/images',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

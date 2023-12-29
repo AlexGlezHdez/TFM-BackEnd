@@ -18,12 +18,19 @@ class CalendarioActividadesController extends Controller
      */
     public function index(Request $request)
     {
+        $calendarioActividades = NULL;
+
         $filter = new CalendarioActividadesFilter();
         $filterItems = $filter->transform($request); //[['columna', 'operador', 'valor']]
 
-        $includeActividades = $request->query('includeActividades');
+        // Se comprueba si tenemos el parametro Titulo
+        $filtradoTitulo=$request->query('titulo');
 
-        $calendarioActividades = CalendarioActividades::where($filterItems)->with('actividad')->orderBy('fecha', 'desc');
+        if ($filtradoTitulo && isset($filtradoTitulo['lk'])) {
+            $calendarioActividades = CalendarioActividades::whereRelation('actividad', $filterItems)->with('actividad')->orderBy('fecha', 'desc');
+        } else {
+            $calendarioActividades = CalendarioActividades::where($filterItems)->with('actividad')->orderBy('fecha', 'desc');
+        }
 
         return new CalendarioActividadesCollection($calendarioActividades->paginate()->appends($request->query()));
     }

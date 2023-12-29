@@ -11,6 +11,8 @@ use App\Filters\V1\EntradaBlogFilter;
 use App\Http\Requests\V1\StoreEntradaBlogRequest;
 use App\Http\Requests\V1\UpdateEntradaBlogRequest;
 
+use Illuminate\Support\Facades\Log;
+
 class EntradaBlogController extends Controller
 {
     /**
@@ -25,7 +27,8 @@ class EntradaBlogController extends Controller
 
         $entradasBlog = EntradaBlog::where($filterItems)->with('autor')->orderBy('fecha_publicacion', 'desc');
 
-        return new EntradaBlogCollection($entradasBlog->paginate()->appends($request->query()));
+//        return new EntradaBlogCollection($entradasBlog->paginate()->appends($request->query()));
+        return new EntradaBlogCollection($entradasBlog->get());
     }
 
     /**
