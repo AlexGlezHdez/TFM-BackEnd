@@ -21,13 +21,20 @@ class CalendarioCursosController extends Controller
         $filter = new CalendarioCursosFilter();
         $filterItems = $filter->transform($request); //[['columna', 'operador', 'valor']]
 
-        $includeCursos = $request->query('includeCursos');
-
-
+        //$includeCursos = $request->query('includeCursos');
         //$calendarioCursos = CalendarioCursos::where($filterItems)->with('curso')->orderBy('fecha', 'desc');
-        $calendarioCursos = CalendarioCursos::where($filterItems)->with('curso')->orderBy('fecha', 'desc');
+        //return new CalendarioCursosCollection($calendarioCursos->paginate()->appends($request->query()));
 
-        return new CalendarioCursosCollection($calendarioCursos->paginate()->appends($request->query()));
+        $filtradoTitulo=$request->query('titulo');
+
+        if ($filtradoTitulo && isset($filtradoTitulo['lk'])) {
+            $calendarioCursos = CalendarioCursos::whereRelation('curso', $filterItems)->with('curso')->orderBy('fecha', 'desc');
+        } else {
+            $calendarioCursos = CalendarioCursos::where($filterItems)->with('curso')->orderBy('fecha', 'desc');
+        }
+
+        //return new calendarioCursosCollection($calendarioCursos->paginate()->appends($request->query()));
+        return new calendarioCursosCollection($calendarioCursos->get());
     }
 
     /**

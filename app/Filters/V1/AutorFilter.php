@@ -12,7 +12,7 @@ class AutorFilter extends Apifilter {
   ];
 
   protected $columnMap = [
-    'nombre' => 'nombre_autor'
+    'nombre' => 'nombre'
   ];
 
 }

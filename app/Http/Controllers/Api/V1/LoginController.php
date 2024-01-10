@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Log;
+
 class LoginController extends Controller
 {
   public function login(Request $request)
@@ -38,6 +40,22 @@ class LoginController extends Controller
       'message' => 'Logged out'
     ]);
   }
+
+  public function admin(Request $request) {
+    $datos=$request->user();
+    // auth()->user()->tokens()->delete();
+    $user = Auth::user();
+    Log::info($datos);
+    Log::info($user->admin);
+
+    if (Auth::user()->admin) {
+      return response()->json(['message' => 'Access granted'], 200);
+    } else {
+      return response()->json(['message' => 'Access denied'], 401);
+    }
+  }
+
+
 
 
   public function validateLogin(Request $request)

@@ -23,13 +23,13 @@ class StoreAutorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombreAutor' => ['required']
+            'nombre' => ['required']
         ];
     }
 
     protected function prepareForValidation() {
         $this->merge([
-            'nombre_autor' => $this->nombreAutor
+            'nombre' => $this->nombre
         ]);
     }
 }

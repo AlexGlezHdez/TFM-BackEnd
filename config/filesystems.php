@@ -29,6 +29,13 @@ return [
     */
 
     'disks' => [
+        'imagenes' => [
+            'driver' => 'local',
+            'root' => 'E:\\',
+            'throw' => false,
+        ],
+
+
 
         'local' => [
             'driver' => 'local',
@@ -56,11 +63,14 @@ return [
             'throw' => false,
         ],
 
-        'molamola' => [
+        'molamola_dev' => [
             'driver' => 'local',
-            'root' => '/',
-            'url' => 'https://tfm-clubmolamola.es/images',
-            'visibility' => 'public',
+            'root' =>'D:\Webs\TFM\molamola_frontend\src\assets\images',
+        ],
+
+        'molamola_prod' => [
+            'driver' => 'local',
+            'root' =>'../../public_html/assets/images',
         ],
 
     ],

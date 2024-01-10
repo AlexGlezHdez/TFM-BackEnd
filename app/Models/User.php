@@ -48,4 +48,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function actividades() {
+        return $this->belongsToMany(CalendarioActividades::class, 'actividad_usuario' , 'id_usuario', 'id_actividad_agendada');
+    }
 }

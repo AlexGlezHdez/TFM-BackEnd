@@ -17,7 +17,7 @@ class AutorResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'nombre' => $this->nombre_autor,
+            'nombre' => $this->nombre,
             'entradas' => EntradaBlogResource::collection($this->whenLoaded('entrada'))
         ];
     }

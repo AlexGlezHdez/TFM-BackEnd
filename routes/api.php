@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\AutorController;
 use App\Http\Controllers\Api\V1\CentroBuceoController;
 use App\Http\Controllers\Api\V1\CursoController;
 use App\Http\Controllers\Api\V1\CalendarioCursosController;
+use App\Http\Controllers\Api\V1\CalendarioActividadesController;
 use App\Http\Controllers\Api\V1\ImagenController;
 use App\Http\Controllers\Api\V1\ContactoController;
 
@@ -46,6 +47,21 @@ Route::post('logout', [
     App\Http\Controllers\Api\V1\LoginController::class,
     'logout'
 ])->middleware('auth:sanctum');
+Route::post('admin', [
+    App\Http\Controllers\Api\V1\LoginController::class,
+    'admin'
+])->middleware('auth:sanctum');
+
+Route::post('v1/calendario-actividades/enrol', [CalendarioActividadesController::class, 'inscribirUsuarioActividad'])
+    ->middleware('auth:sanctum');
+Route::get('v1/calendario-actividades/enrol/{idActividad}', [CalendarioActividadesController::class, 'estaInscrito'])
+    ->middleware('auth:sanctum');
+Route::delete('v1/calendario-actividades/enrol/{idActividad}', [CalendarioActividadesController::class, 'borrarUsuarioActividad'])
+    ->middleware('auth:sanctum');
+Route::get('v1/calendario-actividades/enroled/{idActividad}', [CalendarioActividadesController::class, 'usuariosInscritos'])
+    ->middleware('auth:sanctum');
+Route::get('v1/calendario-actividades/enroled', [CalendarioActividadesController::class, 'actividadesInscritas'])
+    ->middleware('auth:sanctum');
 
 
 Route::post('v1/imagenes', [ImagenController::class, 'uploadImage'])->middleware('auth:sanctum');

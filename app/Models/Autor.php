@@ -12,7 +12,7 @@ class Autor extends Model
     protected $table = 'autores';
 
     protected $fillable = [
-        'nombre_autor',
+        'nombre',
     ];
 
     public function entradas() {

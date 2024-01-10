@@ -21,4 +21,8 @@ class CalendarioActividades extends Model
     public function actividad() {
         return $this->belongsTo(Actividad::class, 'id_actividad', 'id');
     }
+
+    public function miembros() {
+        return $this->belongsToMany(User::class, 'actividad_usuario', 'id_actividad_agendada', 'id_usuario');
+    }
 }

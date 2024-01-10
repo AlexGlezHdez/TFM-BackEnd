@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Models\CalendarioActividades;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CalendarioActividadesResource;
 use App\Http\Resources\V1\CalendarioActividadesCollection;
 use App\Filters\V1\CalendarioActividadesFilter;
 use App\Http\Requests\V1\StoreCalendarioActividadesRequest;
 use App\Http\Requests\V1\UpdateCalendarioActividadesRequest;
+use App\Http\Requests\V1\EnrolCalendarioActividadesRequest;
+
+use Illuminate\Support\Facades\Log;
 
 class CalendarioActividadesController extends Controller
 {
@@ -70,4 +75,74 @@ class CalendarioActividadesController extends Controller
             return response()->json(['message' => 'Not found'], 404);
         }
     }
+
+    public function inscribirUsuarioActividad(EnrolCalendarioActividadesRequest $request)
+    {
+        $usuario = (!$request->idUsuario ? Auth::user() : User::find($request->idUsuario));
+        $actividad = CalendarioActividades::find($request->idActividad);
+        try
+         {
+           $usuario->actividades()->attach($actividad->id);
+            return response()->json(['message' => 'Success'], 204);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Bad request'], 400);
+        }
+    }
+
+    public function borrarUsuarioActividad(EnrolCalendarioActividadesRequest $request)
+    {
+        $usuario = (!$request->idUsuario ? Auth::user() : User::find($request->idUsuario));
+        $actividad = CalendarioActividades::find($request->idActividad);
+        Log::info($request);
+        Log::info($actividad);
+        try
+         {
+           $usuario->actividades()->detach($actividad->id);
+            return response()->json(['message' => 'Success'], 204);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Bad request'], 400);
+        }
+    }
+
+    public function estaInscrito(EnrolCalendarioActividadesRequest $request)
+    {
+        $usuario = (!$request->idUsuario ? Auth::user() : User::find($request->idUsuario));
+        $inscrito = $usuario->actividades()->where('id_actividad_agendada', $request->idActividad);
+
+        Log::info('##################');
+        Log::info($inscrito ? 'Si' : 'No');
+        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $inscrito->toSql()), $inscrito->getBindings()));
+        Log::info('##################');
+
+        if ($inscrito->first()) {
+            return response()->json(['message' => 'Success'], 204);
+        } else {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+    }
+
+    // Devuelve los usuarios inscritos a una actividad
+    public function usuariosInscritos(EnrolCalendarioActividadesRequest $request) {
+        $inscritos = CalendarioActividades::find($request->idActividad)
+            ->miembros()
+            ->where('id_actividad_agendada', $request->idActividad);
+        Log::info('##################');
+        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $inscritos->toSql()), $inscritos->getBindings()));
+        Log::info('##################');
+
+        return  $inscritos->get();
+    }
+
+    // Devuelve las actividades en las que esta inscrita el usuario
+    public function actividadesInscritas(Request $request) {
+        $actividades = $request->user()
+            ->actividades();
+        Log::info('##################');
+        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $actividades->toSql()), $actividades->getBindings()));
+        Log::info('##################');
+
+        return  new CalendarioActividadesCollection($actividades->with('actividad')->orderBy('fecha', 'desc')->get());
+    }
+
+
 }

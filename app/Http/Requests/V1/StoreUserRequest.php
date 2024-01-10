@@ -22,8 +22,22 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $validation = [
+            'nombre' => ['required'],
+            'direccion' => ['required'],
+            'codigo_postal' => ['required'],
+            'ciudad' => ['required'],
+            'telefono' => ['required'],
+            'email' => ['required'],
+            'admin' => ['required'],
+            'password' => [],
         ];
+        return $validation;
+    }
+
+    protected function prepareForValidation() {
+        $this->merge([
+            'codigo_postal' => $this->codigoPostal
+        ]);
     }
 }

@@ -62,4 +62,10 @@ class UpdateUserRequest extends FormRequest
 
         return $validation;
     }
+
+    protected function prepareForValidation() {
+        $this->merge([
+            'codigo_postal' => $this->codigoPostal
+        ]);
+    }
 }

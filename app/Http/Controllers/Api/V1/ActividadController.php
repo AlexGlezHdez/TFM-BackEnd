@@ -24,7 +24,7 @@ class ActividadController extends Controller
 
         $actividades = Actividad::where($filterItems)->orderBy('titulo', 'asc');
 
-        return new ActividadCollection($actividades->paginate()->appends($request->query()));
+        return new ActividadCollection($actividades->get());
     }
 
     /**

@@ -26,18 +26,18 @@ class UpdateAutorRequest extends FormRequest
 
         if ($method == 'PUT') {
             return [
-                'nombreAutor' => ['required']
+                'nombre' => ['required']
             ];
         } else {
             return [
-                'nombreAutor' => ['sometimes', 'required']
+                'nombre' => ['sometimes', 'required']
             ];
         }
     }
 
     protected function prepareForValidation() {
         $this->merge([
-            'nombre_autor' => $this->nombreAutor
+            'nombre' => $this->nombre
         ]);
     }
 }

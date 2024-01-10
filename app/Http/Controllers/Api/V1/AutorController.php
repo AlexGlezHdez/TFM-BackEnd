@@ -58,6 +58,10 @@ class AutorController extends Controller
      */
     public function destroy(Autor $autor)
     {
-        //
+        if ($autor->delete()) {
+            return response()->json(['message' => 'Success'], 204);
+        } else {
+            return response()->json(['message' => 'Not found'], 404);
+        }
     }
 }

@@ -6,33 +6,36 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Resources\V1\UserResource;
 use App\Http\Resources\V1\UserCollection;
-
+use App\Filters\V1\UserFilter;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Requests\V1\StoreUserRequest;
 
-//use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new UserCollection(User::latest()->paginate());
+        $filter = new UserFilter();
+        $queryItems = $filter->transform($request); //[['columna', 'operador', 'valor']]
+
+        $miembros = User::where($queryItems);
+
+        return new UserCollection($miembros->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        return new UserResource(User::create(array_merge($request->all(), ['password' => Hash::make('password')])));
     }
 
     /**
@@ -49,7 +52,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         if (Auth::user() && (Auth::user()->tokenCan('admin') || (Auth::user()->id == $user->id ))) {
-            if (!Auth::user()->tokenCan('admin')) {
+            if (Auth::user()->tokenCan('admin')) {
                 $user->update($request->all());
             } else {
                 $user->update($request->except('admin','email'));
@@ -65,8 +68,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
-    }
+        if ($user->delete()) {
+            return response()->json(['message' => 'Success'], 204);
+        } else {
+            return response()->json(['message' => 'Not found'], 404);
+        }    }
 
     public function changePassword(Request $request)
     {
