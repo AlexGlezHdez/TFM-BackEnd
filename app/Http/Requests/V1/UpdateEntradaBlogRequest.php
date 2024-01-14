@@ -35,7 +35,6 @@ class UpdateEntradaBlogRequest extends FormRequest
         } else {
             return [
                 'titulo_entrada' => ['sometimes', 'required'],
-                'imagen' => ['sometimes', 'required'],
                 'contenido' => ['sometimes', 'required'],
                 'fecha_publicacion' => ['sometimes', 'required'],
                 'idAutor' => ['sometimes', 'required'],

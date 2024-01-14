@@ -3,8 +3,6 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 

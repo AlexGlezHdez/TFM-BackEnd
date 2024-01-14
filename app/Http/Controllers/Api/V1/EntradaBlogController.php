@@ -11,8 +11,6 @@ use App\Filters\V1\EntradaBlogFilter;
 use App\Http\Requests\V1\StoreEntradaBlogRequest;
 use App\Http\Requests\V1\UpdateEntradaBlogRequest;
 
-use Illuminate\Support\Facades\Log;
-
 class EntradaBlogController extends Controller
 {
     /**

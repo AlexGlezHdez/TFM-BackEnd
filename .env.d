@@ -1,8 +1,8 @@
 APP_NAME=TFMClubMolaMola
-APP_ENV=production
+APP_ENV=local
 APP_KEY=base64:rS39lKwgtJEKbUn4nsMxefDzL1/ETYCqlJjf3hK/xCI=
-APP_DEBUG=false
-APP_URL=https://api.tfm-tfm_clubmolamola.es
+APP_DEBUG=true
+APP_URL=http://localhost
 
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null
@@ -12,8 +12,8 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=tfm_clubmolamola
-DB_USERNAME=clubmolamola
-DB_PASSWORD=Qe86?92bg
+DB_USERNAME=root
+DB_PASSWORD=
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file

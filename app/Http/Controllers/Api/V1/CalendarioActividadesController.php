@@ -14,8 +14,6 @@ use App\Http\Requests\V1\StoreCalendarioActividadesRequest;
 use App\Http\Requests\V1\UpdateCalendarioActividadesRequest;
 use App\Http\Requests\V1\EnrolCalendarioActividadesRequest;
 
-use Illuminate\Support\Facades\Log;
-
 class CalendarioActividadesController extends Controller
 {
     /**
@@ -93,8 +91,6 @@ class CalendarioActividadesController extends Controller
     {
         $usuario = (!$request->idUsuario ? Auth::user() : User::find($request->idUsuario));
         $actividad = CalendarioActividades::find($request->idActividad);
-        Log::info($request);
-        Log::info($actividad);
         try
          {
            $usuario->actividades()->detach($actividad->id);
@@ -108,12 +104,6 @@ class CalendarioActividadesController extends Controller
     {
         $usuario = (!$request->idUsuario ? Auth::user() : User::find($request->idUsuario));
         $inscrito = $usuario->actividades()->where('id_actividad_agendada', $request->idActividad);
-
-        Log::info('##################');
-        Log::info($inscrito ? 'Si' : 'No');
-        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $inscrito->toSql()), $inscrito->getBindings()));
-        Log::info('##################');
-
         if ($inscrito->first()) {
             return response()->json(['message' => 'Success'], 204);
         } else {
@@ -126,10 +116,6 @@ class CalendarioActividadesController extends Controller
         $inscritos = CalendarioActividades::find($request->idActividad)
             ->miembros()
             ->where('id_actividad_agendada', $request->idActividad);
-        Log::info('##################');
-        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $inscritos->toSql()), $inscritos->getBindings()));
-        Log::info('##################');
-
         return  $inscritos->get();
     }
 
@@ -137,10 +123,6 @@ class CalendarioActividadesController extends Controller
     public function actividadesInscritas(Request $request) {
         $actividades = $request->user()
             ->actividades();
-        Log::info('##################');
-        Log::info(vsprintf(str_replace(['?'], ['\'%s\''], $actividades->toSql()), $actividades->getBindings()));
-        Log::info('##################');
-
         return  new CalendarioActividadesCollection($actividades->with('actividad')->orderBy('fecha', 'desc')->get());
     }
 
